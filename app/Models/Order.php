@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
+use App\Enums\OrderStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Override;
 
 class Order extends Model
 {
     // this order belongs to this PS, this NSP and this product
     protected $fillable = [
-        'user_id', 
         'product_id', 
         'personnel_id', 
         'product_name', 
@@ -20,8 +21,16 @@ class Order extends Model
         'status'
     ];
 
+    #[Override]
+    protected function casts()
+    {
+        return [
+            'status' => OrderStatus::class
+        ];
+    }
+
     // these three methods are used on the /api/orders endpoint to fetch orders for either PS or NSP, depending on the logged-in user's role
-    // PS member who placed order
+    // PS who placed order
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');

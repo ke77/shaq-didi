@@ -2,30 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SearchRestaurantsRequest;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
 
 class RestaurantController extends Controller
 {
     // fetch restaurants
-    public function index(Request $request)
+    public function index(SearchRestaurantsRequest $request)
     {
         // check if theres a search query param
-        $search = $request->query('search');
+        $search = $request->validated('search');
 
-        if ($search) {
-            $restaurants = Restaurant::where('name', 'LIKE', "%{$search}")->get();
-        } else {
-            $restaurants = Restaurant::all(); //fetch all records
-        }
+        $restaurants = Restaurant::query()
+            ->when($search, fn ($q) => $q->where('name', 'LIKE', "%{$search}%"))
+            ->orderBy('name')
+            ->get();
 
-        return Response()->json($restaurants, 200);
+        return response()->json($restaurants);
     }
 
 
     // fetch single restaurant's products
     public function products(Restaurant $restaurant)
     {
-        return Response()->json($restaurant->products, 200);
+        return response()->json($restaurant->products);
     }
 }

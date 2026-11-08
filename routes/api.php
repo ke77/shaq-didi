@@ -29,7 +29,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // order management routes
     Route::post('/place-order', [OrderController::class, 'store']);
     Route::get('/orders', [OrderController::class, 'index']);
-    Route::get('/order/today', [OrderController::class, 'today']);
-    Route::patch('/order/{order}/complete', [OrderController::class, 'complete']);
+    Route::get('/orders/today', [OrderController::class, 'today']);
+    Route::patch('/orders/{order}/complete', [OrderController::class, 'complete']);
 
 });
