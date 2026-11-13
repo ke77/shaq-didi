@@ -19,4 +19,9 @@ class OrderException extends ApiException
      {
           return new self('This order has already been completed.', 409);
      }
+
+     public static function alreadyCancelled(): self
+     {
+          return new self('This order was cancelled and can no longer be completed.', 409);
+     }
 }

@@ -36,9 +36,8 @@ class Order extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-
     // NSP handling order
-    public function personnel():BelongsTo
+    public function personnel(): BelongsTo
     {
         return $this->belongsTo(User::class, 'personnel_id');
     } 

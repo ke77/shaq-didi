@@ -3,8 +3,10 @@
 namespace App\Services;
 
 use App\Exceptions\AuthException;
+use App\Mail\WelcomeMail;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class AuthService
 {
@@ -13,6 +15,8 @@ class AuthService
 
           // password is hashed by the 'hashed' cast on the model
           $user = User::create($data);
+
+          Mail::to($user)->send(new WelcomeMail($user));
 
           return [
                'user' => $user, 
