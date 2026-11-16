@@ -12,7 +12,7 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 // implements ShouldQueue tells Laravel to queue this email instead of sending it inline.
-class OrderConfirmationMail extends Mailable implements ShouldQueue
+class OrderConfirmationMail extends Mailable
 {
     use Queueable, SerializesModels;
     // SerializesModels matters once it’s queued. The job doesn’t store the whole order, only its id, and the worker re-fetches it fresh from the database when it runs. The email always reflects current data.
